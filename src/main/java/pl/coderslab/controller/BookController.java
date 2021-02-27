@@ -52,6 +52,11 @@ public class BookController implements BookService {
         bookService.delete(id);
     }
 
+    @PutMapping("")
+    @ResponseBody
+    public void updateBook(@RequestBody Book book) {
+        bookService.update(book);
+    }
 
 
     @Override
@@ -71,6 +76,11 @@ public class BookController implements BookService {
 
     @Override
     public void delete(Long id) {
+
+    }
+
+    @Override
+    public void update(Book book) {
 
     }
 }

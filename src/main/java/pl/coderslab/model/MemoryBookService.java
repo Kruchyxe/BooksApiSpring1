@@ -60,4 +60,12 @@ public class MemoryBookService implements BookService {
         }
     }
 
+    @Override
+    public void update(Book book) {
+        if (this.get(book.getId()).isPresent()) {
+            int indexOf = books.indexOf(this.get(book.getId()).get());
+            books.set(indexOf, book);
+        }
+    }
+
 }
