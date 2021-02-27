@@ -1,14 +1,14 @@
 package pl.coderslab.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import pl.coderslab.model.Book;
 import pl.coderslab.model.BookService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -33,10 +33,45 @@ public class BookController implements BookService {
         return bookService.getBooks();
     }
 
+    @GetMapping("/{id}")
+    public Book getBook(@PathVariable Long id) {
+        return this.bookService.get(id).orElseThrow(() -> {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "entity not found"
+            );
+        });
+    }
+
+    @PostMapping("")
+    public void addBook(@RequestBody Book book) {
+        bookService.add(book);
+    }
+
+    @DeleteMapping("/{id}")
+    public void removeBook(@PathVariable Long id) {
+        bookService.delete(id);
+    }
+
+
 
     @Override
     public List<Book> getBooks() {
         return null;
+    }
+
+    @Override
+    public Optional<Book> get(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void add(Book book) {
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
     }
 }
 
